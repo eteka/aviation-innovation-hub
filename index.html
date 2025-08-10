@@ -13,6 +13,16 @@
   <!-- Google Fonts: Poppins with weights 300, 400, 500, 700 -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+  if(!navigator.doNotTrack){
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  }
+  </script>
 </head>
 <body>
   <!-- Navigation -->
@@ -24,9 +34,10 @@
         <ul class="nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#programmes">Programmes</a></li>
-          <li><a href="#saf-fund">SAF Fund</a></li>
+          <li><a href="#saf">SAF Fund</a></li>
           <li><a href="#events">Events</a></li>
           <li><a href="#resources">Resources</a></li>
+          <li><a href="#solutions">Solutions</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-cta">
@@ -93,24 +104,24 @@
   </section>
 
   <!-- SAF Fund -->
-  <section id="saf-fund" class="section saf-band">
+  <section id="saf" class="section saf-band">
     <h2>The NAIH SAF Fund</h2>
-    <p class="intro">We back Nigerian SAF ideas—feedstocks, conversion, logistics and airport blending pilots.</p>
+    <p class="intro">We back Nigerian SAF ideas—feedstocks, conversion, logistics, and airport blending pilots.</p>
     <div class="metrics">
       <div class="metric">
-        <span class="metric-value">₦50M+</span>
-        <span class="metric-label">Committed Funding</span>
+        <span class="metric-value">—</span>
+        <span class="metric-label">₦ Funding Committed</span>
       </div>
       <div class="metric">
-        <span class="metric-value">12</span>
+        <span class="metric-value">—</span>
         <span class="metric-label">Projects Supported</span>
       </div>
       <div class="metric">
-        <span class="metric-value">1,800t</span>
-        <span class="metric-label">CO₂e Aimed to Avoid</span>
+        <span class="metric-value">—</span>
+        <span class="metric-label">tCO₂e Aimed to Avoid</span>
       </div>
     </div>
-    <a href="https://forms.gle/na-saf" target="_blank" class="btn btn-primary">Apply for SAF Funding</a>
+    <a href="https://forms.gle/na-saf" target="_blank" class="btn btn-primary" aria-label="Apply for SAF Funding">Apply for SAF Funding</a>
   </section>
 
   <!-- How It Works -->
@@ -220,6 +231,43 @@
       </article>
     </div>
   </section>
+
+  <!-- Solutions Marketplace -->
+  <section id="solutions" class="section solutions">
+    <h2>Solutions Marketplace</h2>
+    <div class="card-grid">
+      <article class="card" aria-label="Carbon Calculator (Beta)">
+        <h3>Carbon Calculator (Beta)</h3>
+        <p>Route‑based CO₂ estimates with SAF “what‑if”. Export CSV/PDF.</p>
+        <p><small>Owner: NAIH • Tag: Sustainability</small></p>
+        <div class="button-row">
+          <a class="btn btn-primary" href="https://eteka.github.io/aviation-carbon-calculator/" target="_blank" rel="noopener" aria-label="Open Carbon Calculator" onclick="trackAppClick('Carbon Calculator')">Open App</a>
+          <a class="btn btn-secondary" href="#" target="_blank" rel="noopener" aria-label="Documentation">Docs</a>
+        </div>
+        <div id="calc-embed" style="margin-top:16px; display:none;">
+          <iframe src="https://eteka.github.io/aviation-carbon-calculator/" width="100%" height="900" loading="lazy" style="border:0;border-radius:8px"></iframe>
+        </div>
+        <noscript>This tool opens in a new tab.</noscript>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    (function tryEmbed(){
+      const el = document.getElementById('calc-embed');
+      if(!el) return;
+      try { el.style.display = 'block'; } catch(e){ el.style.display = 'none'; }
+    })();
+    function trackAppClick(app){
+      try{
+        const k = 'naih_app_clicks';
+        const d = JSON.parse(localStorage.getItem(k) || '[]');
+        d.push({app: app, ts: new Date().toISOString()});
+        localStorage.setItem(k, JSON.stringify(d));
+        if(window.gtag){ gtag('event','app_open',{app_name: app}); }
+      }catch(e){}
+    }
+  </script>
 
   <!-- Testimonials -->
   <section id="testimonials" class="section testimonials">
